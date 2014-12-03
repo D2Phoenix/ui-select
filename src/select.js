@@ -1176,7 +1176,10 @@
           if (rowsInner.length !== 1) throw uiSelectMinErr('rows', "Expected 1 .ui-select-choices-row-inner but got '{0}'.", rowsInner.length);
           rowsInner.attr('uis-transclude-append', ''); //Adding uisTranscludeAppend directive to row element after choices element has ngRepeat
 
-          $compile(element, transcludeFn)(scope); //Passing current transcludeFn to be able to append elements correctly from uisTranscludeAppend
+          if(groupByExp) {
+            $compile(groups, transcludeFn)(scope);//Passing current transcludeFn to be able to append elements correctly from uisTranscludeAppend
+          }
+          $compile(choices, transcludeFn)(scope);//Passing current transcludeFn to be able to append elements correctly from uisTranscludeAppend
 
           scope.$watch('$select.search', function(newValue) {
             if(newValue && !$select.open && $select.multiple) $select.activate(false, true);
